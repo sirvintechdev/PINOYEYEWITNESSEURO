@@ -210,3 +210,85 @@ gsap.from(".section-title", {
     duration: 0.8,
     ease: "power2.out"
 });
+function updateClocks() {
+    const now = new Date();
+
+    document.getElementById("ph-time").textContent =
+        now.toLocaleTimeString("en-PH", {
+            timeZone: "Asia/Manila",
+            hour12: false
+        });
+
+    document.getElementById("de-time").textContent =
+        now.toLocaleTimeString("de-DE", {
+            timeZone: "Europe/Berlin",
+            hour12: false
+        });
+}
+
+updateClocks();
+setInterval(updateClocks, 1000);
+async function updateWeather() {
+    try {
+        // Manila
+        const ph = await fetch(
+            "https://api.open-meteo.com/v1/forecast?latitude=14.5995&longitude=120.9842&current=temperature_2m"
+        ).then(r => r.json());
+
+        // Berlin
+        const de = await fetch(
+            "https://api.open-meteo.com/v1/forecast?latitude=52.5200&longitude=13.4050&current=temperature_2m"
+        ).then(r => r.json());
+
+        document.getElementById("ph-weather").textContent =
+            `${ph.current.temperature_2m}°C`;
+
+        document.getElementById("de-weather").textContent =
+            `${de.current.temperature_2m}°C`;
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+updateWeather();
+setInterval(updateWeather, 600000); // every 10 minutes
+const translations = {
+    en: {
+        title: "Pinoy Eye Witness in Europe",
+        subtitle: "Filipino Community • News and Current Affairs • Entertainment and Sports",
+        button: "Explore Engine"
+    },
+    de: {
+        title: "Pinoy Augenzeuge in Europa",
+        subtitle: "Philippinische Gemeinschaft • Nachrichten und Aktuelles • Unterhaltung und Sport",
+        button: "Entdecken"
+    },
+    es: {
+        title: "Testigo Filipino en Europa",
+        subtitle: "Comunidad Filipina • Noticias y Actualidad • Entretenimiento y Deportes",
+        button: "Explorar"
+    },
+    ja: {
+        title: "ヨーロッパのフィリピン人目撃者",
+        subtitle: "フィリピン人コミュニティ • ニュースと時事 • エンターテインメントとスポーツ",
+        button: "探索"
+    },
+    zh: {
+        title: "欧洲菲律宾观察者",
+        subtitle: "菲律宾社区 • 新闻时事 • 娱乐与体育",
+        button: "探索"
+    }
+};
+
+document.getElementById("lang").addEventListener("change", function () {
+    const lang = this.value;
+
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.dataset.i18n;
+
+        if (translations[lang] && translations[lang][key]) {
+            el.textContent = translations[lang][key];
+        }
+    });
+});
