@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinoy Eye Witness in Europe</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<svg class="svg-filter-container">
+    <defs>
+        <filter id="cinematic-wave">
+            <feTurbulence type="fractalNoise" baseFrequency="0.012 0.04" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="35" xChannelSelector="R" yChannelSelector="G" result="displace" />
+            <feBlend mode="overlay" in="SourceGraphic" in2="noise" />
+        </filter>
+    </defs>
+</svg>
+
+<div class="live-bar glass">
+    <div class="live-box">
+        <span class="label">PH</span>
+        <div id="ph-time" class="time">00:00:00</div>
+        <div id="ph-weather" class="weather">---</div>
+    </div>
+    <div class="splitter"></div>
+    <div class="live-box">
+        <span class="label">GER</span>
+        <div id="de-time" class="time">00:00:00</div>
+        <div id="de-weather" class="weather">---</div>
+    </div>
+</div>
+
+<div class="lang-bar glass">
+    <select id="lang">
+        <option value="en">EN</option>
+        <option value="de">DE</option>
+        <option value="es">ES</option>
+        <option value="ja">JA</option>
+        <option value="zh">ZH</option>
+    </select>
+</div>
+
+<header class="hero-container">
+    <div class="flag-matrix">
+        <div class="flag-curtain left-side">
+            <img src="https://flagcdn.com/ph.svg" alt="PH Flag">
+        </div>
+        <div class="flag-curtain right-side">
+            <img src="https://flagcdn.com/eu.svg" alt="EU Flag">
+        </div>
+    </div>
+    
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+        <div class="brand-glitch">
+            <h1 data-i18n="title" class="glitch-text">Pinoy Eye Witness in Europe</h1>
+        </div>
+        <p class="subtitle" data-i18n="subtitle">Filipino Stories • News • Sports • Community in Europe</p>
+        <button class="action-btn" id="explore-btn">
+            <span data-i18n="button">Explore Engine</span>
+            <div class="btn-glare"></div>
+        </button>
+    </div>
+</header>
+
+<nav class="sticky-nav glass">
+    <a href="#about" data-i18n="nav_about">About</a>
+    <a href="#services" data-i18n="nav_services">Services</a>
+    <a href="#videos" data-i18n="nav_videos">Videos</a>
+    <a href="#contact" data-i18n="nav_contact">Contact</a>
+</nav>
+
+<main class="content-wrapper">
+    <section id="about" class="scroll-section glass">
+        <h2 class="section-title" data-i18n="about_title">About Us</h2>
+        <div class="about-grid">
+            <div class="photo-container">
+                <div class="tech-corner tl"></div>
+                <div class="tech-corner br"></div>
+                <img src="assets/vin.JPEG" class="profile-img" alt="Sir Vin">
+            </div>
+            <div class="bio-text">
+                <p data-i18n="bio_1">A digital media platform dedicated to sharing Filipino stories across Europe.</p>
+                <p data-i18n="bio_2">Led by Sir Vin, we connect communities through real-time storytelling, culture, and lived experiences that bring Filipinos abroad closer together.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="scroll-section grid-layout">
+        <div class="card glass">
+            <div class="card-glow"></div>
+            <h3 data-i18n="srv_1_title">Community News</h3>
+            <p data-i18n="srv_1_desc">Real-time updates from Filipino communities in Europe.</p>
+        </div>
+        <div class="card glass">
+            <div class="card-glow"></div>
+            <h3 data-i18n="srv_2_title">Travel Stories</h3>
+            <p data-i18n="srv_2_desc">Discover Europe through Filipino experiences.</p>
+        </div>
+        <div class="card glass">
+            <div class="card-glow"></div>
+            <h3 data-i18n="srv_3_title">Video Reports</h3>
+            <p data-i18n="srv_3_desc">Interviews, documentaries, and events.</p>
+        </div>
+    </section>
+
+    <section id="videos" class="scroll-section glass">
+        <h2 class="section-title" data-i18n="video_title">Featured Video</h2>
+        <div class="responsive-video">
+            <iframe src="https://youtu.be/v_EEM4mKRLM?si=Hf2oEnK3sEty_L0R" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <section id="contact" class="scroll-section glass contact-card">
+        <h4 data-i18n="contact_title">Contact Us</h4>
+        <p class="email-link">sirvinpinoy@gmail.com</p>
+        <div class="social-row">
+            <a href="#" class="social-tag">Facebook</a>
+            <a href="#" class="social-tag">Instagram</a>
+            <a href="#" class="social-tag">YouTube</a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© Powered by Sir Vin Techdev</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
