@@ -378,3 +378,11 @@ footer {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.card{
+position:relative;
+padding:30px;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+gap:15px;
+}
