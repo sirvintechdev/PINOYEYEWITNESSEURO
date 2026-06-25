@@ -364,3 +364,16 @@ footer {
         display: none; /* Hides on mobile views to optimize workspace */
     }
 }
+.glitch-text {
+    white-space: nowrap;
+    font-size: clamp(1.8rem, 4vw, 4rem);
+    text-align: center;
+}
+.hero-content {
+    width: 100%;
+    padding: 0 10px;
+}
+.glitch-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
