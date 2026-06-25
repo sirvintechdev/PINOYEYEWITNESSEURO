@@ -1,20 +1,33 @@
-// ==========================================
-// 1. DYNAMIC SYSTEM LIVE CLOCKS ENGINE
-// ==========================================
-function synchronizeClocks() {
-    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-    
-    // Manila Stream
-    const phTime = new Date().toLocaleTimeString('en-US', { ...timeOptions, timeZone: 'Asia/Manila' });
-    document.getElementById('ph-time').textContent = phTime;
+function updateLiveClocks() {
 
-    // Central European Stream (Berlin Base)
-    const deTime = new Date().toLocaleTimeString('en-US', { ...timeOptions, timeZone: 'Europe/Berlin' });
-    document.getElementById('de-time').textContent = deTime;
+    const options = {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+    };
+
+    document.getElementById("ph-time").textContent =
+        new Date().toLocaleTimeString(
+            "en-PH",
+            {
+                ...options,
+                timeZone: "Asia/Manila"
+            }
+        );
+
+    document.getElementById("de-time").textContent =
+        new Date().toLocaleTimeString(
+            "de-DE",
+            {
+                ...options,
+                timeZone: "Europe/Berlin"
+            }
+        );
 }
-setInterval(synchronizeClocks, 1000);
-synchronizeClocks();
 
+updateLiveClocks();
+setInterval(updateLiveClocks,1000);
 // ==========================================
 // 2. LIVE ASYNCHRONOUS WEATHER AGGREGATOR
 // ==========================================
@@ -226,60 +239,9 @@ function updateClocks() {
         });
 }
 
-updateClocks();
-setInterval(updateClocks, 1000);
-async function updateWeather() {
-    try {
-        // Manila
-        const ph = await fetch(
-            "https://api.open-meteo.com/v1/forecast?latitude=14.5995&longitude=120.9842&current=temperature_2m"
-        ).then(r => r.json());
-
-        // Berlin
-        const de = await fetch(
-            "https://api.open-meteo.com/v1/forecast?latitude=52.5200&longitude=13.4050&current=temperature_2m"
-        ).then(r => r.json());
-
-        document.getElementById("ph-weather").textContent =
-            `${ph.current.temperature_2m}°C`;
-
-        document.getElementById("de-weather").textContent =
-            `${de.current.temperature_2m}°C`;
-
-    } catch (err) {
-        console.error(err);
-    }
-}
-
 updateWeather();
 setInterval(updateWeather, 600000); // every 10 minutes
-const translations = {
-    en: {
-        title: "Pinoy Eye Witness in Europe",
-        subtitle: "Filipino Community • News and Current Affairs • Entertainment and Sports",
-        button: "Explore Engine"
-    },
-    de: {
-        title: "Pinoy Augenzeuge in Europa",
-        subtitle: "Philippinische Gemeinschaft • Nachrichten und Aktuelles • Unterhaltung und Sport",
-        button: "Entdecken"
-    },
-    es: {
-        title: "Testigo Filipino en Europa",
-        subtitle: "Comunidad Filipina • Noticias y Actualidad • Entretenimiento y Deportes",
-        button: "Explorar"
-    },
-    ja: {
-        title: "ヨーロッパのフィリピン人目撃者",
-        subtitle: "フィリピン人コミュニティ • ニュースと時事 • エンターテインメントとスポーツ",
-        button: "探索"
-    },
-    zh: {
-        title: "欧洲菲律宾观察者",
-        subtitle: "菲律宾社区 • 新闻时事 • 娱乐与体育",
-        button: "探索"
-    }
-};
+
 
 document.getElementById("lang").addEventListener("change", function () {
     const lang = this.value;
@@ -292,3 +254,41 @@ document.getElementById("lang").addEventListener("change", function () {
         }
     });
 });
+async function updateWeather() {
+
+    try {
+
+        const [phRes,deRes] = await Promise.all([
+
+            fetch(
+                "https://api.open-meteo.com/v1/forecast?latitude=14.5995&longitude=120.9842&current=temperature_2m"
+            ),
+
+            fetch(
+                "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.405&current=temperature_2m"
+            )
+
+        ]);
+
+        const ph = await phRes.json();
+        const de = await deRes.json();
+
+        document.getElementById("ph-weather").textContent =
+            `${Math.round(ph.current.temperature_2m)}°C`;
+
+        document.getElementById("de-weather").textContent =
+            `${Math.round(de.current.temperature_2m)}°C`;
+
+    }
+    catch(err){
+
+        document.getElementById("ph-weather").textContent =
+            "Offline";
+
+        document.getElementById("de-weather").textContent =
+            "Offline";
+    }
+}
+
+updateWeather();
+setInterval(updateWeather,600000);
