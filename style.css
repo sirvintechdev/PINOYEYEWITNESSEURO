@@ -256,8 +256,8 @@ body {
 
 .photo-container {
     position: relative;
-    width: 180px;  /* Compact Portrait Size */
-    height: 180px; /* Force Perfect Proportions */
+    width: 120px;  /* Compact Portrait Size */
+    height: 120px; /* Force Perfect Proportions */
     border-radius: 8px;
     padding: 6px;
     background: rgba(255,255,255,0.03);
